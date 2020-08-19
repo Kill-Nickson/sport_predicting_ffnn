@@ -1,3 +1,4 @@
+import os
 import sys
 import datetime
 
@@ -22,7 +23,35 @@ class Threader(QThread):
         while True:
             self.updateStart.emit('Updating the results table...')
 
-            predictions, matches_found, error_code = predictor.get_predicts_results()
+            # predictions, matches_found, error_code = predictor.get_predicts_results()
+            self.sleep(2)
+
+            # - "Available live-matches" case -
+            error_code = 0
+            matches_found = True
+            predictions = ['Team1:Team2:Map1:W2', 'Team1:Team2:Map2:W2', 'Team1:Team2:Map3:W1',
+                           'Team3:Team4:Map1:W2', 'Team3:Team4:Map2:W1', 'Team3:Team4:Map3:W2',
+                           'Team3:Team4:Map4:W2', 'Team3:Team4:Map5:W1']
+
+            # - "No live-matches" case -
+            # error_code = 0
+            # matches_found = False
+            # predictions = []
+
+            # - "No internet connection" case -
+            # error_code = 2
+            # matches_found = False
+            # predictions = []
+
+            # - "Absence of .json-file with a neural net weights" case -
+            # error_code = 3
+            # matches_found = False
+            # predictions = []
+
+            # - "Problem occurred while getting active maps" case -
+            # error_code = 4
+            # matches_found = False
+            # predictions = []
 
             if matches_found is False:
                 if error_code == 2:
@@ -55,19 +84,19 @@ class Window(QWidget):
         self.table_widget = QTableWidget(0, 4, self)
 
         self.label = QLabel(self)
-        self.label.setPixmap(QPixmap('./sport_predicting_ffnn/images/title_bar_icon.png'))
+        self.label.setPixmap(QPixmap(os.path.dirname(__file__) + '/images/title_bar_icon.png'))
         self.label.resize(720, 50)
         self.label.move(0, -5)
         self.label.stackUnder(self.table_widget)
 
         self.label = QLabel(self)
-        self.label.setPixmap(QPixmap('./sport_predicting_ffnn/images/title_icon.png'))
+        self.label.setPixmap(QPixmap(os.path.dirname(__file__) + '/images/title_icon.png'))
         self.label.resize(35, 35)
         self.label.move(5, 5)
         self.label.stackUnder(self.table_widget)
 
         self.bg_label = QLabel(self)
-        self.bg_label.setPixmap(QPixmap('./sport_predicting_ffnn/images/bg_image.png'))
+        self.bg_label.setPixmap(QPixmap(os.path.dirname(__file__) + '/images/bg_image.png'))
         self.bg_label.resize(720, 690)
         self.bg_label.move(0, 0)
         self.bg_label.stackUnder(self.label)
@@ -81,7 +110,7 @@ class Window(QWidget):
 
         self.initUi()
 
-        self.setWindowIcon(QIcon('./sport_predicting_ffnn/images/taskbar_icon.png'))
+        self.setWindowIcon(QIcon(os.path.dirname(__file__) + '/images/taskbar_icon.png'))
         self.setWindowTitle('The Predictor')
         self.setMinimumSize(QSize(720, 690))
         self.setMaximumSize(QSize(720, 690))
@@ -101,7 +130,7 @@ class Window(QWidget):
                             border: none;
                         }
                         QPushButton#quit:hover {
-                            background-image: url("./sport_predicting_ffnn/images/red-x.png");
+                            background-image: url(os.path.dirname(__file__) + "/images/red-x.png");
                             background-repeat: no-repeat;
                         }
                         QPushButton#minimize {
@@ -124,7 +153,7 @@ class Window(QWidget):
         self.push_button_quit.resize(40, 40)
         self.push_button_quit.setStyleSheet(stylesheet)
         self.push_button_quit.stackUnder(self.table_widget)
-        self.push_button_quit.setIcon(QIcon('./sport_predicting_ffnn/images/x.png'))
+        self.push_button_quit.setIcon(QIcon(os.path.dirname(__file__) + '/images/x.png'))
         self.push_button_quit.clicked.connect(self.button_quit)
         self.push_button_quit.setToolTip('Close app')
         self.push_button_quit.toolTip()
@@ -134,7 +163,7 @@ class Window(QWidget):
         self.push_button_minimize.resize(34, 34)
         self.push_button_minimize.setStyleSheet(stylesheet)
         self.push_button_minimize.stackUnder(self.table_widget)
-        self.push_button_minimize.setIcon(QIcon('./sport_predicting_ffnn/images/-.png'))
+        self.push_button_minimize.setIcon(QIcon(os.path.dirname(__file__) + '/images/-.png'))
         self.push_button_minimize.clicked.connect(self.button_minimize)
         self.push_button_minimize.setToolTip('Minimize app\'s window')
 
