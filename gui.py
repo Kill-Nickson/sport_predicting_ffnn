@@ -23,15 +23,15 @@ class Threader(QThread):
         while True:
             self.updateStart.emit('Updating the results table...')
 
-            # predictions, matches_found, error_code = predictor.get_predicts_results()
+            predictions, matches_found, error_code = predictor.get_predicts_results()
             self.sleep(2)
 
             # - "Available live-matches" case -
-            error_code = 0
-            matches_found = True
-            predictions = ['Team1:Team2:Map1:W2', 'Team1:Team2:Map2:W2', 'Team1:Team2:Map3:W1',
-                           'Team3:Team4:Map1:W2', 'Team3:Team4:Map2:W1', 'Team3:Team4:Map3:W2',
-                           'Team3:Team4:Map4:W2', 'Team3:Team4:Map5:W1']
+            # error_code = 0
+            # matches_found = True
+            # predictions = ['Team1:Team2:Map1:W2', 'Team1:Team2:Map2:W2', 'Team1:Team2:Map3:W1',
+            #                'Team3:Team4:Map1:W2', 'Team3:Team4:Map2:W1', 'Team3:Team4:Map3:W2',
+            #                'Team3:Team4:Map4:W2', 'Team3:Team4:Map5:W1']
 
             # - "No live-matches" case -
             # error_code = 0
